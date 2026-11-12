@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" class="js-off">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Activities | Alpha Theta Chapter | Alpha Phi Alpha Fraternity, Inc.</title>
+  <meta name="description" content="Service, advocacy, brotherhood and events from Alpha Phi Alpha Fraternity, Incorporated, Alpha Theta Chapter at the University of Iowa.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="images/coat-of-arms.jpg">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Site header (keep identical on every page) ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <img src="images/coat-of-arms.jpg" alt="" width="44" height="66">
+        <span class="brand-text">
+          <span class="brand-fraternity">Alpha Phi Alpha<br>Fraternity, Inc.<sup>®</sup></span>
+          <span class="brand-chapter">Alpha Theta Chapter</span>
+        </span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="members.html">Current Members</a></li>
+          <li><a href="history.html">Chapter History</a></li>
+          <li><a href="membership.html">Becoming a Member</a></li>
+          <li><a href="activities.html" aria-current="page">Activities</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero page-hero">
+      <div class="container">
+        <span class="eyebrow">Service · Advocacy · Brotherhood</span>
+        <h1>Activities</h1>
+        <hr class="gold-rule">
+        <p class="lead">Programs, service and events from the brothers of Alpha Theta — on campus at the University of Iowa and across Iowa City.</p>
+      </div>
+    </section>
+
+    <!--
+      CHAPTER UPDATE: Event and program cards on this page are generated from
+      data/activities.js. Add new events there; past and upcoming events sort
+      themselves by date.
+    -->
+
+    <section class="section" aria-labelledby="upcoming-heading">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Mark your calendar</span>
+          <h2 id="upcoming-heading">Upcoming</h2>
+        </div>
+        <div id="activity-filters" class="filter-bar" role="group" aria-label="Filter activities by category"></div>
+        <p id="filter-status" class="visually-hidden" aria-live="polite"></p>
+        <ul id="upcoming-list" class="grid grid-3" style="list-style:none;padding:0;margin:0">
+          <li class="empty-state">Upcoming events are loaded from data/activities.js.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section-soft" aria-labelledby="recent-heading">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">On the yard</span>
+          <h2 id="recent-heading">Recent activities and chapter news</h2>
+        </div>
+        <ul id="recent-list" class="grid grid-3" style="list-style:none;padding:0;margin:0">
+          <li class="empty-state">Recent activities are loaded from data/activities.js.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="programs-heading">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Ongoing work</span>
+          <h2 id="programs-heading">Programs</h2>
+          <p>Alpha Theta has carried the Fraternity’s commitment to service and advocacy since its first year — the chapter seated its first Go-To-High-School, Go-To-College committee in 1923.</p>
+        </div>
+        <ul id="programs-list" class="grid grid-3" style="list-style:none;padding:0;margin:0">
+          <li class="card"><h3>Go-To-High-School, Go-To-College</h3></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section-dark" aria-labelledby="tradition-heading">
+      <div class="container two-col">
+        <div>
+          <span class="eyebrow">A long tradition</span>
+          <h2 id="tradition-heading">Service has always been part of the 30th house</h2>
+          <p>In November 1931, Alpha Theta and the Gamma Chapter of Kappa Alpha Psi Fraternity, Inc. renewed their annual charity football game before about five hundred spectators, raising a collective $250 for the unemployed. In March 1932, the brothers hosted Langston Hughes during his visit to the University of Iowa.</p>
+          <p><a href="history.html#timeline">Explore the chapter timeline →</a></p>
+        </div>
+        <div>
+          <h3>Follow along</h3>
+          <p>The chapter posts events, informationals and news on Instagram first.</p>
+          <div class="btn-row"><a class="btn btn-gold" href="https://www.instagram.com/atheta_alphas/" rel="noopener">@atheta_alphas on Instagram</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Site footer (keep identical on every page) ===== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-id">
+        <img src="images/coat-of-arms.jpg" alt="" width="56" height="84">
+        <div>
+          <p class="name">Alpha Phi Alpha Fraternity, Incorporated<br>Alpha Theta Chapter</p>
+          <p>Chartered March 11, 1922<br>University of Iowa · Iowa City, Iowa<br>District of Iowa</p>
+          <!-- CHAPTER UPDATE: add the chapter's official contact email -->
+          <p>Contact: <span class="placeholder-note">Chapter email to be added</span></p>
+        </div>
+      </div>
+      <div>
+        <h2>Explore</h2>
+        <ul>
+          <li><a href="members.html">Current Members</a></li>
+          <li><a href="history.html">Chapter History</a></li>
+          <li><a href="membership.html">Becoming a Member</a></li>
+          <li><a href="activities.html">Activities</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Connect</h2>
+        <ul>
+          <li><a href="https://www.instagram.com/atheta_alphas/" rel="noopener">Instagram: @atheta_alphas</a></li>
+          <li><a href="https://apa1906.net/" rel="noopener">Alpha Phi Alpha Fraternity, Inc. (national)</a></li>
+          <li><a href="https://apa1906.net/membership/" rel="noopener">National membership information</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© <span id="year">2026</span> Alpha Phi Alpha Fraternity, Incorporated, Alpha Theta Chapter.</p>
+      <p>AΦA<sup>®</sup> and Alpha Phi Alpha Fraternity, Inc.<sup>®</sup> marks are used per the Fraternity’s Brand Guidelines.</p>
+    </div>
+  </footer>
+
+  <script src="data/activities.js"></script>
+  <script src="js/site.js"></script>
+</body>
+</html>
