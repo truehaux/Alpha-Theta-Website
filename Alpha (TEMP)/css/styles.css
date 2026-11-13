@@ -70,6 +70,9 @@ body {
 
 img { max-width: 100%; height: auto; display: block; }
 
+/* Keep the hidden attribute working on elements whose class sets a display value (e.g. .card). */
+[hidden] { display: none !important; }
+
 h1, h2, h3, h4 {
   font-family: var(--font-primary);
   line-height: 1.2;
@@ -131,7 +134,8 @@ a:hover { text-decoration-thickness: 3px; }
   font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--apa-old-gold); white-space: nowrap;
 }
-.brand-chapter { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.brand-chapter { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+.brand { flex-shrink: 0; }
 
 .nav-toggle {
   display: none;
@@ -143,15 +147,15 @@ a:hover { text-decoration-thickness: 3px; }
 
 .site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 0.25rem; }
 .site-nav a {
-  display: block; padding: 0.6rem 0.8rem;
+  display: block; padding: 0.6rem 0.6rem;
   color: var(--text-on-dark); text-decoration: none;
-  font-size: var(--fs-sm); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  font-size: 0.875rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
   border-bottom: 3px solid transparent; white-space: nowrap;
 }
 .site-nav a:hover { color: var(--apa-cream); border-bottom-color: var(--apa-old-gold); }
 .site-nav a[aria-current="page"] { color: var(--apa-old-gold); border-bottom-color: var(--apa-old-gold); }
 
-@media (max-width: 1140px) {
+@media (max-width: 1340px) {
   .nav-toggle { display: inline-block; }
   .site-nav { position: absolute; left: 0; right: 0; top: 100%; background: var(--apa-black); border-bottom: 4px solid var(--apa-old-gold); }
   .site-nav[data-open="false"] { display: none; }

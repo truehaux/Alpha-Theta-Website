@@ -9,7 +9,7 @@
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("site-nav");
   if (toggle && nav) {
-    var mq = window.matchMedia("(max-width: 1140px)"); // keep in sync with styles.css
+    var mq = window.matchMedia("(max-width: 1340px)"); // keep in sync with styles.css
     var setOpen = function (open) {
       toggle.setAttribute("aria-expanded", String(open));
       nav.setAttribute("data-open", String(open));
@@ -194,8 +194,16 @@
         g.hidden = visibleInGroup === 0;
         shown += visibleInGroup;
       });
-      if (status) status.textContent = "Showing " + shown + " " + (shown === 1 ? "activity" : "activities");
+      var msg = "Showing " + shown + " of " + past.length + " " + (past.length === 1 ? "entry" : "entries");
+      if (status) status.textContent = msg;
+      if (count) count.textContent = (state.year === "All" && state.cat === "All") ? summary : msg;
+      if (empty) empty.hidden = shown !== 0;
     };
+    var count = document.getElementById("archive-count");
+    var summary = past.length + " entries from " + years[years.length - 1] + " to " + years[0];
+    var empty = el("p", { class: "empty-state", text: "No activities match these filters." });
+    empty.hidden = true;
+    archive.appendChild(empty);
 
     var yearSelect = document.getElementById("year-filter");
     if (yearSelect) {
@@ -219,8 +227,7 @@
         bar.appendChild(b);
       });
     }
-    var count = document.getElementById("archive-count");
-    if (count) count.textContent = past.length + " entries from " + years[years.length - 1] + " to " + years[0];
+    if (count) count.textContent = summary;
   }
 
   var progRoot = document.getElementById("programs-list");
