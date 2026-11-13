@@ -59,36 +59,46 @@
           <span class="eyebrow">Mark your calendar</span>
           <h2 id="upcoming-heading">Upcoming</h2>
         </div>
-        <div id="activity-filters" class="filter-bar" role="group" aria-label="Filter activities by category"></div>
-        <p id="filter-status" class="visually-hidden" aria-live="polite"></p>
-        <ul id="upcoming-list" class="grid grid-3" style="list-style:none;padding:0;margin:0">
+        <ul id="upcoming-list" class="grid grid-3 plain-list">
           <li class="empty-state">Upcoming events are loaded from data/activities.js.</li>
         </ul>
       </div>
     </section>
 
-    <section class="section section-soft" aria-labelledby="recent-heading">
+    <section class="section section-soft" aria-labelledby="programs-heading">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow">On the yard</span>
-          <h2 id="recent-heading">Recent activities and chapter news</h2>
+          <span class="eyebrow">Ongoing work</span>
+          <h2 id="programs-heading">Signature programs</h2>
+          <p>Alpha Theta has carried the Fraternity’s commitment to service and advocacy since its first year — the chapter seated its first Go-To-High-School, Go-To-College committee in 1923.</p>
         </div>
-        <ul id="recent-list" class="grid grid-3" style="list-style:none;padding:0;margin:0">
-          <li class="empty-state">Recent activities are loaded from data/activities.js.</li>
+        <ul id="programs-list" class="grid grid-3 plain-list">
+          <li class="card"><h3>Go-To-High-School, Go-To-College</h3></li>
         </ul>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="programs-heading">
+    <section class="section" aria-labelledby="archive-heading">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow">Ongoing work</span>
-          <h2 id="programs-heading">Programs</h2>
-          <p>Alpha Theta has carried the Fraternity’s commitment to service and advocacy since its first year — the chapter seated its first Go-To-High-School, Go-To-College committee in 1923.</p>
+          <span class="eyebrow">On the yard</span>
+          <h2 id="archive-heading">Activity archive</h2>
+          <p>Service, programs and chapter news from the chapter’s posts, grouped by year.</p>
         </div>
-        <ul id="programs-list" class="grid grid-3" style="list-style:none;padding:0;margin:0">
-          <li class="card"><h3>Go-To-High-School, Go-To-College</h3></li>
-        </ul>
+        <div class="filter-row">
+          <div>
+            <label for="year-filter">Year</label>
+            <select id="year-filter"><option value="All">All years</option></select>
+          </div>
+          <div>
+            <span class="filter-label" aria-hidden="true">Category</span>
+            <div id="activity-filters" class="filter-bar" role="group" aria-label="Filter by category"></div>
+          </div>
+        </div>
+        <p class="archive-count"><span id="archive-count"></span> <span id="filter-status" class="visually-hidden" aria-live="polite"></span></p>
+        <div id="archive-list">
+          <p class="empty-state">The archive is loaded from data/activities.js.</p>
+        </div>
       </div>
     </section>
 

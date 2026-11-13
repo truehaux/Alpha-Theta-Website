@@ -23,7 +23,9 @@ images/             Photos and the Coat of Arms
 |----------------------------------|----------------------------------------|
 | Officers or the member roster    | `data/members.js`                      |
 | Roster year (e.g. "2026–2027")   | `CHAPTER_ROSTER_TERM` in `data/members.js` |
-| Events, news, programs           | `data/activities.js`                   |
+| Events, news, programs           | `data/activities.js`. Dates can be a full date, a month (`2025-11`) or a year (`2014`); the archive groups them by year automatically. |
+| Recognition on the home page     | `index.html` (look for `CHAPTER UPDATE`) |
+| UIowa membership policies        | `membership.html`, section `#uiowa`. Re-check against fsl.uiowa.edu each year. |
 | Timeline milestones, presidents  | `history.html` (look for `CHAPTER UPDATE`) |
 | Chapter contact email            | The footer of each `.html` page (look for `CHAPTER UPDATE`) |
 

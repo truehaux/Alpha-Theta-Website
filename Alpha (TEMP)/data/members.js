@@ -21,27 +21,51 @@
    (APA Brand Guidelines, Social Media – Privacy).
    ========================================================================== */
 
-window.CHAPTER_ROSTER_TERM = "2025–2026"; // CHAPTER UPDATE: academic year shown on the page
+window.CHAPTER_ROSTER_TERM = "2026–2027"; // CHAPTER UPDATE: academic year shown on the page
 
-// Executive Board. The 2025–2026 Executive Board was introduced on the chapter
-// Instagram (Oct. 21, 2025), but names were not included in the post caption.
-// CHAPTER UPDATE: replace each placeholder with the officer's name and confirm titles.
+// Chapter officers.
+// Source: AlphaMX chapter detail (my.apa1906.net), "Current Chapter Officers" and
+// "Current Actives in Chapter", Nov. 2026. All five active brothers hold office;
+// terms run through Aug. 31, 2027. Photos are the brothers' AlphaMX profile pictures.
+// Only names, offices and initiation semester are published — never member IDs,
+// emails, hometowns or financial details from AlphaMX.
+// CHAPTER UPDATE: update after each officer election.
 window.CHAPTER_OFFICERS = [
-  { name: "Name to be added", role: "President",           line: "", major: "", photo: "", alt: "", placeholder: true },
-  { name: "Name to be added", role: "Vice President",      line: "", major: "", photo: "", alt: "", placeholder: true },
-  { name: "Name to be added", role: "Secretary",           line: "", major: "", photo: "", alt: "", placeholder: true },
-  { name: "Name to be added", role: "Treasurer",           line: "", major: "", photo: "", alt: "", placeholder: true }
+  { name: "Jace Mundt",          role: "President · Dean of Membership", line: "Spring 2025",
+    photo: "images/members/mundt.jpg", alt: "Portrait of Brother Jace Mundt in a black suit, white shirt and black-and-gold striped tie" },
+  { name: "Corey Dixon Jr.",     role: "First Vice President · Treasurer", line: "Spring 2025",
+    photo: "images/members/dixon.jpg", alt: "Portrait of Brother Corey Dixon Jr. in an old gold Alpha Phi Alpha sweater, outdoors" },
+  { name: "Alontae Gross",       role: "Secretary · Director of Educational Activities", line: "Spring 2026",
+    photo: "images/members/gross.jpg", alt: "Portrait of Brother Alontae Gross in a dark suit and black-and-gold striped tie, outdoors" },
+  { name: "Tae’Shaun Presswood", role: "Chaplain · Sergeant-at-Arms · Parliamentarian", line: "Spring 2025",
+    major: "Assistant District Director, District of Iowa",
+    photo: "images/members/presswood.jpg", alt: "Portrait of Brother Tae’Shaun Presswood in a black Alpha Phi Alpha jacket, outdoors" },
+  { name: "Corey Breiten",       role: "Historian · Associate Editor to the Sphinx · NPHC Representative", line: "Spring 2026",
+    photo: "images/members/breiten.jpg", alt: "Portrait of Brother Corey Breiten in a black suit and black-and-gold striped tie, outdoors" },
+  { name: "Anthony Haughton II", role: "Alpha Advisor", line: "", major: "Nu Chi Lambda Chapter", photo: "", alt: "" }
 ];
 
-// Active brothers. Only brothers named in the source material are listed.
-// CHAPTER UPDATE: add every active brother.
-window.CHAPTER_MEMBERS = [
-  // Named in the chapter Instagram post of Sept. 10, 2026.
-  { name: "Tae’Shaun Presswood", role: "", line: "", major: "", photo: "", alt: "", placeholder: false },
-  // Named only as "Jace" in the chapter Instagram post of May 14, 2026. CHAPTER UPDATE: add last name.
-  { name: "Jace (last name to be added)", role: "", line: "", major: "", photo: "", alt: "", placeholder: true },
-  { name: "Name to be added", role: "", line: "", major: "", photo: "", alt: "", placeholder: true },
-  { name: "Name to be added", role: "", line: "", major: "", photo: "", alt: "", placeholder: true }
+// Additional active brothers who do not hold office (none as of Nov. 2026).
+// The "Brothers" section is hidden automatically while this list is empty.
+// CHAPTER UPDATE: add brothers here as the chapter grows.
+window.CHAPTER_MEMBERS = [];
+
+// Intake classes ("ships"), shown on the Chapter History page.
+// Every class listed here was initiated through the Fraternity's official
+// Membership Intake Process. Ship names come from the history book (2008) and
+// the chapter's Instagram. Semesters without a published name come from the
+// roster's initiation dates. Do not add individual names unless the brothers
+// of that class agree. CHAPTER UPDATE: fill in missing ship names.
+window.CHAPTER_INTAKE_CLASSES = [
+  { term: "1990",        ship: "S.S. Renaissance",      note: "From the chapter’s reactivated years." },
+  { term: "Nov. 2008",   ship: "S.S. ADEWALE",          note: "Re-charter members; “The Crown Has Come Home.”" },
+  { term: "Spring 2019", ship: "Phour Below",           note: "" },
+  { term: "Spring 2020", ship: "",                      note: "" },
+  { term: "Spring 2021", ship: "",                      note: "" },
+  { term: "Spring 2022", ship: "The Centennial Line",   note: "Initiated in the chapter’s centennial year." },
+  { term: "Fall 2023",   ship: "Third Dynasty",         note: "" },
+  { term: "Spring 2025", ship: "Cryogenic Insurgence",  note: "" },
+  { term: "Spring 2026", ship: "S.S. Triple T.H.R.E.A.T.", note: "" }
 ];
 
 // Historical chapter directory, transcribed from "District of Iowa: History Book,"

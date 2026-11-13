@@ -45,19 +45,25 @@
   }
 
   function initials(name) {
-    var parts = name.replace(/\(.*?\)/g, "").trim().split(/\s+/);
+    var parts = name.replace(/\(.*?\)/g, "").trim().split(/\s+/).filter(function (p) { return !/^(jr\.?|sr\.?|ii|iii|iv)$/i.test(p); });
     if (!parts[0] || /^name$/i.test(parts[0])) return "ΑΘ";
     return (parts[0][0] + (parts.length > 1 ? parts[parts.length - 1][0] : "")).toUpperCase();
   }
 
-  // Parse "YYYY-MM-DD" as a local date (avoids timezone shifts).
+  // Activity dates may be "YYYY-MM-DD", "YYYY-MM" or "YYYY".
+  // Parsed as local dates (avoids timezone shifts); missing parts default to the start.
   function parseDate(s) {
     if (!s) return null;
-    var p = s.split("-");
-    return new Date(+p[0], +p[1] - 1, +p[2]);
+    var p = String(s).split("-");
+    return new Date(+p[0], p[1] ? +p[1] - 1 : 0, p[2] ? +p[2] : 1);
   }
-  function formatDate(d) {
-    return d.toLocaleDateString("en-US", { weekday: "short", month: "long", day: "numeric", year: "numeric" });
+  function precision(s) { return s ? String(s).split("-").length : 0; } // 3 = day, 2 = month, 1 = year
+  function formatDate(s) {
+    var d = parseDate(s), n = precision(s);
+    if (!d) return "";
+    if (n === 3) return d.toLocaleDateString("en-US", { weekday: "short", month: "long", day: "numeric", year: "numeric" });
+    if (n === 2) return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+    return String(d.getFullYear());
   }
 
   /* ---------- Members ---------- */
@@ -82,6 +88,8 @@
   function renderList(id, list) {
     var root = document.getElementById(id);
     if (!root || !list) return;
+    var section = root.closest("section");
+    if (!list.length && section) { section.hidden = true; return; }
     root.innerHTML = "";
     list.forEach(function (m) { root.appendChild(memberCard(m)); });
   }
@@ -110,64 +118,109 @@
     if (count) count.textContent = window.CHAPTER_DIRECTORY.length;
   }
 
+  /* ---------- Intake classes (History page) ---------- */
+  var shipRoot = document.getElementById("intake-classes");
+  if (shipRoot && window.CHAPTER_INTAKE_CLASSES) {
+    shipRoot.innerHTML = "";
+    window.CHAPTER_INTAKE_CLASSES.forEach(function (c) {
+      var named = !!c.ship;
+      shipRoot.appendChild(el("li", { class: "card" + (named ? "" : " placeholder") }, [
+        el("p", { class: "meta", text: c.term }),
+        el("h3", { text: named ? c.ship : "Ship name to be added" }),
+        c.note ? el("p", { text: c.note }) : null
+      ]));
+    });
+  }
+
   /* ---------- Activities ---------- */
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var activities = (window.CHAPTER_ACTIVITIES || []).map(function (a) {
+    var d = parseDate(a.date);
+    return { a: a, d: d || new Date(0), year: d ? d.getFullYear() : null, upcoming: precision(a.date) === 3 && d >= today };
+  });
+
+  function activityCard(it) {
+    var a = it.a;
+    var details = el("dl");
+    if (a.time) { details.appendChild(el("dt", { text: "Time" })); details.appendChild(el("dd", { text: a.time })); }
+    if (a.location) { details.appendChild(el("dt", { text: "Where" })); details.appendChild(el("dd", { text: a.location })); }
+    return el("li", { class: "card activity-card" + (it.upcoming ? " upcoming" : ""), "data-category": a.category, "data-year": String(it.year) }, [
+      a.image ? el("img", { class: "activity-image", src: a.image, alt: a.alt || "", loading: "lazy" }) : null,
+      el("span", { class: "tag", text: a.category }),
+      a.date ? el("p", { class: "date", text: formatDate(a.date) }) : null,
+      el("h3", { text: a.title }),
+      el("p", { text: a.summary }),
+      details.childNodes.length ? details : null,
+      a.link ? el("a", { class: "card-link", href: a.link, rel: "noopener", target: "_blank", text: (a.linkLabel || "View source") + " ↗" }) : null
+    ]);
+  }
+
   var upRoot = document.getElementById("upcoming-list");
-  var recentRoot = document.getElementById("recent-list");
-  if ((upRoot || recentRoot) && window.CHAPTER_ACTIVITIES) {
-    var today = new Date(); today.setHours(0, 0, 0, 0);
-    var items = window.CHAPTER_ACTIVITIES.map(function (a) {
-      var ev = parseDate(a.eventDate);
-      return { a: a, ev: ev, sortDate: ev || parseDate(a.postedDate) || new Date(0), upcoming: !!ev && ev >= today };
+  if (upRoot) {
+    var upcoming = activities.filter(function (i) { return i.upcoming; }).sort(function (x, y) { return x.d - y.d; });
+    upRoot.innerHTML = "";
+    if (!upcoming.length) upRoot.appendChild(el("li", { class: "empty-state", text: "No upcoming events are posted right now. Follow @atheta_alphas on Instagram for announcements." }));
+    upcoming.forEach(function (i) { upRoot.appendChild(activityCard(i)); });
+  }
+
+  var archive = document.getElementById("archive-list");
+  if (archive) {
+    var past = activities.filter(function (i) { return !i.upcoming; }).sort(function (x, y) { return y.d - x.d; });
+    var years = [];
+    past.forEach(function (i) { if (years.indexOf(i.year) === -1) years.push(i.year); });
+    archive.innerHTML = "";
+    years.forEach(function (y) {
+      var group = el("section", { class: "year-group", "data-year": String(y), "aria-labelledby": "year-" + y }, [
+        el("h3", { class: "year-heading", id: "year-" + y, text: String(y) })
+      ]);
+      var list = el("ul", { class: "grid grid-3 plain-list" });
+      past.filter(function (i) { return i.year === y; }).forEach(function (i) { list.appendChild(activityCard(i)); });
+      group.appendChild(list);
+      archive.appendChild(group);
     });
 
-    function activityCard(it) {
-      var a = it.a;
-      var dateText = it.ev ? formatDate(it.ev) : (a.postedDate ? "Announced " + formatDate(parseDate(a.postedDate)) : "");
-      var details = el("dl");
-      if (a.time) { details.appendChild(el("dt", { text: "Time" })); details.appendChild(el("dd", { text: a.time })); }
-      if (a.location) { details.appendChild(el("dt", { text: "Where" })); details.appendChild(el("dd", { text: a.location })); }
-      return el("li", { class: "card activity-card" + (it.upcoming ? " upcoming" : ""), "data-category": a.category }, [
-        a.image ? el("img", { class: "activity-image", src: a.image, alt: a.alt || "", loading: "lazy" }) : null,
-        el("span", { class: "tag", text: a.category }),
-        dateText ? el("p", { class: "date", text: dateText }) : null,
-        el("h3", { text: a.title }),
-        el("p", { text: a.summary }),
-        details.childNodes.length ? details : null,
-        a.link ? el("a", { class: "card-link", href: a.link, rel: "noopener", target: "_blank", text: (a.linkLabel || "Learn more") + " ↗" }) : null
-      ]);
+    var state = { year: "All", cat: "All" };
+    var status = document.getElementById("filter-status");
+    var applyFilters = function () {
+      var shown = 0;
+      Array.prototype.forEach.call(archive.querySelectorAll(".year-group"), function (g) {
+        var visibleInGroup = 0;
+        Array.prototype.forEach.call(g.querySelectorAll(".activity-card"), function (card) {
+          var ok = (state.year === "All" || card.getAttribute("data-year") === state.year) &&
+                   (state.cat === "All" || card.getAttribute("data-category") === state.cat);
+          card.hidden = !ok;
+          if (ok) visibleInGroup++;
+        });
+        g.hidden = visibleInGroup === 0;
+        shown += visibleInGroup;
+      });
+      if (status) status.textContent = "Showing " + shown + " " + (shown === 1 ? "activity" : "activities");
+    };
+
+    var yearSelect = document.getElementById("year-filter");
+    if (yearSelect) {
+      years.forEach(function (y) { yearSelect.appendChild(el("option", { value: String(y), text: String(y) })); });
+      yearSelect.addEventListener("change", function () { state.year = yearSelect.value; applyFilters(); });
     }
 
-    var upcoming = items.filter(function (i) { return i.upcoming; }).sort(function (x, y) { return x.sortDate - y.sortDate; });
-    var recent = items.filter(function (i) { return !i.upcoming; }).sort(function (x, y) { return y.sortDate - x.sortDate; });
-
-    function fill(root, list, emptyText) {
-      if (!root) return;
-      root.innerHTML = "";
-      if (!list.length) { root.appendChild(el("li", { class: "empty-state", text: emptyText })); return; }
-      list.forEach(function (i) { root.appendChild(activityCard(i)); });
-    }
-    fill(upRoot, upcoming, "No upcoming events are posted right now. Follow @atheta_alphas on Instagram for announcements.");
-    fill(recentRoot, recent, "No recent activities yet.");
-
-    // Category filter
     var bar = document.getElementById("activity-filters");
     if (bar) {
       var cats = [];
-      items.forEach(function (i) { if (cats.indexOf(i.a.category) === -1) cats.push(i.a.category); });
+      past.forEach(function (i) { if (cats.indexOf(i.a.category) === -1) cats.push(i.a.category); });
+      cats.sort();
       ["All"].concat(cats).forEach(function (c, idx) {
         var b = el("button", { type: "button", "aria-pressed": idx === 0 ? "true" : "false", text: c });
         b.addEventListener("click", function () {
           Array.prototype.forEach.call(bar.querySelectorAll("button"), function (x) { x.setAttribute("aria-pressed", "false"); });
           b.setAttribute("aria-pressed", "true");
-          Array.prototype.forEach.call(document.querySelectorAll(".activity-card"), function (card) {
-            card.hidden = !(c === "All" || card.getAttribute("data-category") === c);
-          });
-          var status = document.getElementById("filter-status");
-          if (status) status.textContent = c === "All" ? "Showing all activities" : "Showing " + c + " activities";
+          state.cat = c;
+          applyFilters();
         });
         bar.appendChild(b);
       });
     }
+    var count = document.getElementById("archive-count");
+    if (count) count.textContent = past.length + " entries from " + years[years.length - 1] + " to " + years[0];
   }
 
   var progRoot = document.getElementById("programs-list");
@@ -182,23 +235,19 @@
     });
   }
 
-  /* ---------- Home: next event teaser ---------- */
+  /* ---------- Home: latest teaser ---------- */
   var teaser = document.getElementById("home-activities");
-  if (teaser && window.CHAPTER_ACTIVITIES) {
-    var t0 = new Date(); t0.setHours(0, 0, 0, 0);
-    var sorted = window.CHAPTER_ACTIVITIES.slice().map(function (a) {
-      var ev = parseDate(a.eventDate);
-      return { a: a, ev: ev, d: ev || parseDate(a.postedDate) || new Date(0), up: !!ev && ev >= t0 };
-    }).sort(function (x, y) {
-      if (x.up !== y.up) return x.up ? -1 : 1;
-      return x.up ? x.d - y.d : y.d - x.d;
+  if (teaser && activities.length) {
+    var sorted = activities.slice().sort(function (x, y) {
+      if (x.upcoming !== y.upcoming) return x.upcoming ? -1 : 1;
+      return x.upcoming ? x.d - y.d : y.d - x.d;
     }).slice(0, 3);
     teaser.innerHTML = "";
     sorted.forEach(function (it) {
       teaser.appendChild(el("li", { class: "card" }, [
-        el("p", { class: "meta", text: (it.up ? "Upcoming · " : "") + it.a.category }),
+        el("p", { class: "meta", text: (it.upcoming ? "Upcoming · " : "") + it.a.category }),
         el("h3", { text: it.a.title }),
-        el("p", { text: it.ev ? formatDate(it.ev) : "Announced " + formatDate(parseDate(it.a.postedDate)) })
+        el("p", { text: formatDate(it.a.date) })
       ]));
     });
   }

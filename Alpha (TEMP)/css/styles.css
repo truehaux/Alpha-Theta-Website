@@ -355,6 +355,38 @@ details.disclosure > .disclosure-body { padding: 0 1.25rem 1.25rem; }
 }
 .filter-bar button[aria-pressed="true"] { background: var(--apa-black); color: var(--apa-old-gold); }
 
+.filter-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem 2rem; margin-bottom: 1rem; }
+.filter-row label, .filter-row .filter-label { display: block; font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.35rem; }
+.filter-row select {
+  font: inherit; font-size: var(--fs-sm); font-weight: 600; padding: 0.55rem 2rem 0.55rem 0.85rem;
+  border: 2px solid var(--apa-black); border-radius: var(--radius); background: var(--apa-white); color: var(--apa-black);
+}
+.filter-row .filter-bar { margin-bottom: 0; }
+.archive-count { font-size: var(--fs-sm); color: var(--text-muted); margin-bottom: 2rem; }
+
+.plain-list { list-style: none; padding: 0; margin: 0; }
+.year-group { margin-bottom: 2.5rem; }
+.year-heading {
+  font-size: var(--fs-xl); display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;
+}
+.year-heading::after { content: ""; flex: 1; height: 3px; background: var(--apa-old-gold); }
+
+.recognition { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.5rem; }
+.recognition .card { border-top-color: var(--apa-black); }
+.recognition .meta { color: var(--text-muted); }
+
+.author-card { margin-top: 2rem; display: grid; grid-template-columns: minmax(0, 18rem) 1fr; gap: 2rem; align-items: start; }
+.author-photo { margin: 0; }
+@media (max-width: 720px) {
+  .author-card { grid-template-columns: 1fr; }
+  .author-photo { max-width: 18rem; }
+}
+.author-card p { font-family: var(--font-secondary); font-size: 1.05rem; line-height: 1.7; }
+.author-card .meta { font-family: var(--font-primary); font-size: var(--fs-xs); }
+.author-card .btn cite { font-style: italic; }
+
+.term-note { font-size: var(--fs-sm); border-left: 4px solid var(--apa-old-gold); padding: 0.75rem 1rem; background: var(--surface-cream-soft); max-width: 46rem; }
+
 .activity-card .tag {
   align-self: flex-start;
   font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
