@@ -31,6 +31,8 @@ images/             Photos and the Coat of Arms
 
 To find every spot that still needs chapter input, search the project for `CHAPTER UPDATE` and `To be added`.
 
+**After changing a `.css` or `.js` file:** each page loads these files with a version tag, such as `css/styles.css?v=20261113`. Change that number on every page, for example to today's date, so visitors' browsers and Render's CDN load the new file and not a cached copy. Editing only the HTML pages doesn't require this.
+
 **Member photos:** save square images (400×400 or larger) in `images/members/` and set `photo` and `alt` on that member's entry. Get each brother's consent before you post his photo (Brand Guidelines, Social Media: Privacy).
 
 **Activity photos:** Instagram images are not bundled with the site. Save the chapter's own photo in `images/activities/` and set `image` and `alt` on the entry.

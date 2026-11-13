@@ -123,6 +123,7 @@ a:hover { text-decoration-thickness: 3px; }
 .header-inner {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   min-height: 5rem;
+  max-width: 90rem; /* wider than page content so the logo and all tabs fit on one row */
 }
 .brand {
   display: flex; align-items: center; gap: 0.85rem;
@@ -145,9 +146,9 @@ a:hover { text-decoration-thickness: 3px; }
   padding: 0.5rem 0.85rem; cursor: pointer;
 }
 
-.site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 0.25rem; }
+.site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 0; }
 .site-nav a {
-  display: block; padding: 0.6rem 0.6rem;
+  display: block; padding: 0.6rem 0.55rem;
   color: var(--text-on-dark); text-decoration: none;
   font-size: 0.875rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
   border-bottom: 3px solid transparent; white-space: nowrap;
@@ -155,18 +156,23 @@ a:hover { text-decoration-thickness: 3px; }
 .site-nav a:hover { color: var(--apa-cream); border-bottom-color: var(--apa-old-gold); }
 .site-nav a[aria-current="page"] { color: var(--apa-old-gold); border-bottom-color: var(--apa-old-gold); }
 
-@media (max-width: 1340px) {
-  .nav-toggle { display: inline-block; }
-  .site-nav { position: absolute; left: 0; right: 0; top: 100%; background: var(--apa-black); border-bottom: 4px solid var(--apa-old-gold); }
-  .site-nav[data-open="false"] { display: none; }
-  .site-nav ul { flex-direction: column; padding: 0.5rem var(--gutter) 1rem; }
-  .site-nav a { padding: 0.85rem 0.25rem; border-bottom: 1px solid #2a2a2a; }
-  .js-off .site-nav { position: static; display: block; }
-}
+/* Compact header (Menu button). js/site.js adds .nav-compact to <html> whenever the
+   tabs don't fit beside the logo, so the header never overlaps at any width, zoom
+   level or font size. */
+.nav-compact .nav-toggle { display: inline-block; }
+.nav-compact .site-nav { position: absolute; left: 0; right: 0; top: 100%; background: var(--apa-black); border-bottom: 4px solid var(--apa-old-gold); }
+.nav-compact .site-nav[data-open="false"] { display: none; }
+.nav-compact .site-nav ul { flex-direction: column; padding: 0.5rem var(--gutter) 1rem; }
+.nav-compact .site-nav a { padding: 0.85rem 0.25rem; border-bottom: 1px solid #2a2a2a; }
+/* Without JavaScript, let the tabs wrap below the logo instead of overlapping it. */
+.js-off .header-inner { flex-wrap: wrap; }
+.js-off .site-nav ul { flex-wrap: wrap; }
 @media (max-width: 420px) {
   .brand-fraternity { font-size: 0.62rem; letter-spacing: 0.1em; white-space: normal; }
   .brand-chapter { font-size: 0.95rem; }
   .brand img { width: 36px; }
+  .brand { gap: 0.6rem; flex-shrink: 1; min-width: 0; }
+  .header-inner { gap: 0.5rem; }
 }
 
 /* ---------- Page hero ---------- */

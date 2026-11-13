@@ -5,23 +5,39 @@
 
   document.documentElement.classList.remove("js-off");
 
-  /* ---------- Mobile navigation ---------- */
+  /* ---------- Navigation ----------
+     The header switches to the Menu button (.nav-compact on <html>) whenever the
+     tabs don't fit beside the logo. This is measured, not a fixed breakpoint, so
+     it stays correct when tabs are added or text renders larger (zoom, fonts). */
+  var root = document.documentElement;
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("site-nav");
-  if (toggle && nav) {
-    var mq = window.matchMedia("(max-width: 1340px)"); // keep in sync with styles.css
+  var inner = document.querySelector(".header-inner");
+  var brandEl = document.querySelector(".brand");
+  if (toggle && nav && inner && brandEl) {
+    var navList = nav.querySelector("ul");
+    var compact = null;
     var setOpen = function (open) {
       toggle.setAttribute("aria-expanded", String(open));
       nav.setAttribute("data-open", String(open));
     };
-    var sync = function () { setOpen(!mq.matches); };
-    sync();
-    if (mq.addEventListener) mq.addEventListener("change", sync); else mq.addListener(sync);
+    var fit = function () {
+      root.classList.remove("nav-compact");
+      var b = brandEl.getBoundingClientRect(), n = navList.getBoundingClientRect();
+      var tooWide = inner.scrollWidth > inner.clientWidth + 1 || b.right + 32 > n.left;
+      if (tooWide) root.classList.add("nav-compact");
+      if (tooWide !== compact) setOpen(!tooWide); // close the menu when entering compact mode
+      compact = tooWide;
+    };
+    fit();
+    window.addEventListener("resize", fit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    window.addEventListener("load", fit);
     toggle.addEventListener("click", function () {
       setOpen(toggle.getAttribute("aria-expanded") !== "true");
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && mq.matches && toggle.getAttribute("aria-expanded") === "true") {
+      if (e.key === "Escape" && compact && toggle.getAttribute("aria-expanded") === "true") {
         setOpen(false);
         toggle.focus();
       }
